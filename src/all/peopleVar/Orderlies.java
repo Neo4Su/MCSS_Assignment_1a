@@ -11,20 +11,23 @@ public class Orderlies {
         this.availableOrderlies = Params.ORDERLIES;
     }
 
-    //用于招募orderlies，并返回剩余的空闲orderlies数量
-    public synchronized int recruitOrderlies() throws InterruptedException {
+    //用于招募orderlies
+    public synchronized void recruitOrderlies(int id) throws InterruptedException {
         //如果没有空闲的orderlies，则一直等待
         while (availableOrderlies < Params.TRANSFER_ORDERLIES){
             wait();
         }
+        //招募orderlies
         availableOrderlies -= Params.TRANSFER_ORDERLIES;
-        return availableOrderlies;
+        System.out.println("Nurse "+id+" recruits "+Params.TRANSFER_ORDERLIES +
+                " orderlies ("+availableOrderlies+ " free).");
     }
 
     //orderlies协助nurse护送病人后，用于释放orderlies资源
-    public synchronized int releaseOrderlies(){
+    public synchronized void releaseOrderlies(int id){
         availableOrderlies += Params.TRANSFER_ORDERLIES;
+        System.out.println("Nurse "+id+" releases "+Params.TRANSFER_ORDERLIES +
+                " orderlies ("+availableOrderlies+ " free).");
         notifyAll();
-        return availableOrderlies;
     }
 }
