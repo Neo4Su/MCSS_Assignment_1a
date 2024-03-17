@@ -1,12 +1,3 @@
-package all.peopleActive;
-
-import all.Params;
-import all.Patient;
-import all.locations.Foyer;
-import all.locations.Treatment;
-import all.locations.Triage;
-import all.peopleVar.Orderlies;
-
 public class Nurse extends Thread{
     private int id;
     private Foyer foyer;

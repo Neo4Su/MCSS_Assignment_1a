@@ -1,7 +1,3 @@
-package all.locations;
-
-import all.Patient;
-
 public class Foyer {
     //foyer中正在到来的病人 与 正在离开的病人
     private Patient arrivingPatient = null;

@@ -1,7 +1,3 @@
-package all;
-
-import all.locations.Foyer;
-
 /**
  * Produces new patients to present to the emergency department.
  *

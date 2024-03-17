@@ -1,7 +1,3 @@
-package all;
-
-import all.locations.Foyer;
-
 /**
  * Consumes discharged patients from the emergency department.
  *

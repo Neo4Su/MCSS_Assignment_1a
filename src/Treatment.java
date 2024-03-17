@@ -1,7 +1,3 @@
-package all.locations;
-
-import all.Params;
-import all.Patient;
 
 public class Treatment {
     private Patient currentPatient = null;

@@ -1,7 +1,3 @@
-package all.peopleVar;
-
-import all.Params;
-
 public class Orderlies {
     //空闲的orderlies数量
     private volatile int availableOrderlies;

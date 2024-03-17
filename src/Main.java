@@ -1,12 +1,3 @@
-package all;
-
-import all.locations.Foyer;
-import all.locations.Treatment;
-import all.locations.Triage;
-import all.peopleActive.Nurse;
-import all.peopleActive.Specialist;
-import all.peopleVar.Orderlies;
-
 /**
  * The top-level component of the emergency department simulator.
  *

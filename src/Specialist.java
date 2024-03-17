@@ -1,7 +1,3 @@
-package all.peopleActive;
-import all.Params;
-import all.locations.Treatment;
-
 public class Specialist extends Thread{
     Treatment treatment;
 

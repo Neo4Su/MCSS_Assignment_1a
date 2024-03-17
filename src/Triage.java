@@ -1,7 +1,3 @@
-package all.locations;
-
-import all.Params;
-import all.Patient;
 
 import static java.lang.Thread.sleep;
 

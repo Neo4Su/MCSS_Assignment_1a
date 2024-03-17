@@ -1,5 +1,3 @@
-package all;
-
 import java.util.Random;
 
 /**
@@ -40,7 +38,7 @@ public class Patient {
         this.treated = false;
     }
 
-    // get a new all.Patient instance with a unique identifier
+    // get a new Patient instance with a unique identifier
     public static Patient getNewPatient() {
         return new Patient(nextId++);
     }
