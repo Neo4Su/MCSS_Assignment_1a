@@ -3,13 +3,12 @@
  *
  * @author ngeard@unimelb.edu.au
  * @date 13 February 2024
- *
  */
 
 public class Producer extends Thread {
 
-	private Foyer foyer;
-	
+    private Foyer foyer;
+
     // create a new producer
     Producer(Foyer newFoyer) {
         this.foyer = newFoyer;
@@ -17,7 +16,7 @@ public class Producer extends Thread {
 
     // quests 
     public void run() {
-        while(!isInterrupted()) {
+        while (!isInterrupted()) {
             try {
                 // create a new patient and admit it to the ED.
                 Patient patient = Patient.getNewPatient();

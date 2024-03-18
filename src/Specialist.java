@@ -1,4 +1,4 @@
-public class Specialist extends Thread{
+public class Specialist extends Thread {
     Treatment treatment;
 
     public Specialist(Treatment treatment) {
@@ -7,7 +7,7 @@ public class Specialist extends Thread{
 
     @Override
     public void run() {
-        while (!isInterrupted()){
+        while (!isInterrupted()) {
             try {
                 // 完成在医院的其它职责
                 Thread.sleep(Params.SPECIALIST_AWAY_TIME);

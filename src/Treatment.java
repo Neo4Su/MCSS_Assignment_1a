@@ -39,11 +39,11 @@ public class Treatment {
         while (!specialistAvailable) {
             wait();
         }
-        System.out.println(currentPatient+" treatment started.");
+        System.out.println(currentPatient + " treatment started.");
         //模拟治疗病人的时间
         Thread.sleep(Params.TREATMENT_TIME);
 
-        System.out.println(currentPatient+" treatment complete.");
+        System.out.println(currentPatient + " treatment complete.");
         //设置专家不可用，因为不能连续治疗两个病人
         specialistAvailable = false;
         currentPatient.setTreated(true);

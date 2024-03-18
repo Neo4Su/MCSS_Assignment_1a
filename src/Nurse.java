@@ -1,4 +1,4 @@
-public class Nurse extends Thread{
+public class Nurse extends Thread {
     private int id;
     private Foyer foyer;
     private Triage triage;
@@ -8,16 +8,16 @@ public class Nurse extends Thread{
 
     public Nurse(int id, Foyer foyer, Triage triage, Orderlies orderlies, Treatment treatment) {
         this.id = id;
-        this.foyer=foyer;
-        this.triage=triage;
-        this.orderlies=orderlies;
-        this.treatment=treatment;
+        this.foyer = foyer;
+        this.triage = triage;
+        this.orderlies = orderlies;
+        this.treatment = treatment;
     }
 
     @Override
     public void run() {
         while (!isInterrupted()) {
-            try{
+            try {
                 //allocate a nurse to a patient
                 foyer.allocateNurse(this);
 
@@ -44,7 +44,7 @@ public class Nurse extends Thread{
                 sleep(Params.TRANSFER_TIME);
 
                 //根据是否严重决定去向
-                if (patient.Severe()){
+                if (patient.Severe()) {
                     //病人严重，送到treatment
                     treatment.arriveAtTreatment(patient);
                     //释放orderlies
@@ -78,7 +78,7 @@ public class Nurse extends Thread{
                     foyer.releasePatient(id);
                 }
 
-            }catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 this.interrupt();
             }
         }

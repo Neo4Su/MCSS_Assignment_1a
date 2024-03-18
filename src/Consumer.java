@@ -2,8 +2,7 @@
  * Consumes discharged patients from the emergency department.
  *
  * @author ngeard@unimelb.edu.au
- * @date 13 February 2024 
- *
+ * @date 13 February 2024
  */
 
 public class Consumer extends Thread {
@@ -25,8 +24,7 @@ public class Consumer extends Thread {
 
                 // let some time pass before the next patient departs
                 sleep(Params.departurePause());
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 this.interrupt();
             }
         }
