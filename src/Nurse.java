@@ -18,10 +18,8 @@ public class Nurse extends Thread{
     public void run() {
         while (!isInterrupted()) {
             try{
-                //admit a patient and allocate a nurse to a patient
-                patient = foyer.allocateNurse();
-                System.out.println(patient + " admitted to ED.");
-                System.out.println(patient + " allocated to Nurse " + id +".");
+                //allocate a nurse to a patient
+                foyer.allocateNurse(this);
 
                 //进入triage前招募orderlies, 为保证打印顺序，将id传入，以便在同步块中打印
                 orderlies.recruitOrderlies(id);
@@ -67,8 +65,7 @@ public class Nurse extends Thread{
                     orderlies.releaseOrderlies(id);
 
                     //护士结束任务，可以分配新的病人
-                    System.out.println("Nurse "+id+" releases "+patient+".");
-                    foyer.releasePatient();
+                    foyer.releasePatient(id);
 
                 } else {
                     //病人不严重，返回foyer
@@ -78,21 +75,20 @@ public class Nurse extends Thread{
                     orderlies.releaseOrderlies(id);
 
                     //护士结束任务，可以分配新的病人
-                    System.out.println("Nurse "+id+" releases "+patient+".");
-                    foyer.releasePatient();
+                    foyer.releasePatient(id);
                 }
 
             }catch (InterruptedException e){
                 this.interrupt();
             }
-
-
-            /*
-            to do:
-            1. 病人admit要和allocate一起吗
-            2. 释放病人前可以先discharge吗（当前版本确保了这点）
-            */
         }
     }
 
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public int getNurseId() {
+        return id;
+    }
 }

@@ -57,6 +57,4 @@ public class Treatment {
         //通知有病人离开treatment room
         notifyAll();
     }
-
-
 }

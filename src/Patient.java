@@ -42,8 +42,7 @@ public class Patient {
     public static Patient getNewPatient() {
         return new Patient(nextId++);
     }
-  
-    
+
     public boolean Severe() {
     	return this.severe;
     }
@@ -61,8 +60,6 @@ public class Patient {
     public void setTreated(boolean treated) {
     	this.treated = treated;
     }
-
-
 
     // produce an identifying string for the patient
     public String toString() {

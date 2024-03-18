@@ -39,7 +39,6 @@ public class Params {
   //the maximum amount of time between departures from ED (after discharge)
   public final static int MAX_DEPART_INTERVAL = 500;
 
-
 /**
  * For simplicity, we assume uniformly distributed time lapses.
  */

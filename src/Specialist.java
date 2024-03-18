@@ -9,7 +9,7 @@ public class Specialist extends Thread{
     public void run() {
         while (!isInterrupted()){
             try {
-                // 模拟去忙医院的其它事
+                // 完成在医院的其它职责
                 Thread.sleep(Params.SPECIALIST_AWAY_TIME);
                 // 忙完后进入treatment room
                 treatment.specialistEnters();

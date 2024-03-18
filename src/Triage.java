@@ -1,5 +1,4 @@
 
-import static java.lang.Thread.sleep;
 
 public class Triage {
     // 表示是否有病人在triage
@@ -17,7 +16,6 @@ public class Triage {
         notifyAll();
     }
 
-
     //诊断完成并招募orderlies后，病人离开triage
     public synchronized void departFromTriage() {
         System.out.println(currentPatient + " leaves triage.");
@@ -25,5 +23,4 @@ public class Triage {
         // 通知有病人离开triage
         notifyAll();
     }
-
 }

@@ -1,30 +1,35 @@
+/**
+ *
+ *
+ */
 public class Foyer {
-    //foyer中正在到来的病人 与 正在离开的病人
+    // Patients who are arriving and leaving in the foyer
     private Patient arrivingPatient = null;
     private Patient departingPatient = null;
 
     // 病人来了，如果没有病人，开始admit patient参数是来看病的病人
     public synchronized void arriveAtED(Patient patient) throws InterruptedException {
-
-        //如果已有病人正在进入，则一直wait
+        // If there is already a patient entering, keep waiting
         while (arrivingPatient != null){
             wait();
         }
         arrivingPatient = patient;
-
-        //通知有病人来了
+        System.out.println(arrivingPatient + " admitted to ED.");
+        // Notify that a patient has arrived
         notifyAll();
     }
 
     //called by nurse, to allocate a nurse to a patient
-    public synchronized Patient allocateNurse() throws InterruptedException {
+    public synchronized void allocateNurse(Nurse nurse) throws InterruptedException {
         // 如果没有病人或病人已分配护士，一直等待
         while (arrivingPatient == null || arrivingPatient.isAllocated()){
             wait();
         }
+
         //分配护士
         arrivingPatient.setAllocated(true);
-        return arrivingPatient;
+        nurse.setPatient(arrivingPatient);
+        System.out.println(arrivingPatient + " allocated to Nurse " + nurse.getNurseId() +".");
     }
 
     //将病人带到triage
@@ -61,7 +66,8 @@ public class Foyer {
     }
 
     //确保护士释放病人后，病人才能离开
-    public synchronized void releasePatient() {
+    public synchronized void releasePatient(int NurseId) {
+        System.out.println("Nurse "+NurseId+" releases "+departingPatient+".");
         departingPatient.setAllocated(false);
         notifyAll();
     }
