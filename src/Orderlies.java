@@ -1,29 +1,37 @@
+/**
+ * Orderlies who assist nurses in transferring patients.
+ *
+ * @name Yucheng Su
+ * @studentId 1503107
+ */
+
 public class Orderlies {
-    //空闲的orderlies数量
+    // number of free orderlies
     private volatile int availableOrderlies;
 
-    //根据Params中的参数，初始化orderlies
+    // initialize the number of orderlies according to Params
     public Orderlies() {
         this.availableOrderlies = Params.ORDERLIES;
     }
 
-    //用于招募orderlies
+    // recruit orderlies to assist nurse in transferring patient
     public synchronized void recruitOrderlies(int NurseId) throws InterruptedException {
-        //如果没有空闲的orderlies，则一直等待
+        // if there are not enough free orderlies, keep waiting
         while (availableOrderlies < Params.TRANSFER_ORDERLIES) {
             wait();
         }
-        //招募orderlies
         availableOrderlies -= Params.TRANSFER_ORDERLIES;
         System.out.println("Nurse " + NurseId + " recruits " + Params.TRANSFER_ORDERLIES +
                 " orderlies (" + availableOrderlies + " free).");
     }
 
-    //orderlies协助nurse护送病人后，用于释放orderlies资源
+    // release orderlies after nurse has transferred patient
     public synchronized void releaseOrderlies(int NurseId) {
         availableOrderlies += Params.TRANSFER_ORDERLIES;
         System.out.println("Nurse " + NurseId + " releases " + Params.TRANSFER_ORDERLIES +
                 " orderlies (" + availableOrderlies + " free).");
+
+        // notify that orderlies have been released
         notifyAll();
     }
 }

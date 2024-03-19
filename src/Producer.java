@@ -3,10 +3,13 @@
  *
  * @author ngeard@unimelb.edu.au
  * @date 13 February 2024
+ *
+ * @name Yucheng Su
+ * @studentId 1503107
  */
 
 public class Producer extends Thread {
-
+    // the foyer where patients arrive at the ED
     private Foyer foyer;
 
     // create a new producer

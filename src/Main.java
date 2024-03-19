@@ -6,6 +6,9 @@
  * - starting all of the processes;
  *
  * @author ngeard@unimelb.edu.au
+ *
+ * @name Yucheng Su
+ * @studentId 1503107
  */
 
 public class Main {

@@ -5,6 +5,9 @@ import java.util.Random;
  *
  * @author ngeard@unimelb.edu.au
  * @date 13 February 2024
+ *
+ * @name Yucheng Su
+ * @studentId 1503107
  */
 
 public class Patient {
@@ -43,6 +46,16 @@ public class Patient {
         return new Patient(nextId++);
     }
 
+    // produce an identifying string for the patient
+    public String toString() {
+        String s = "Patient " + id;
+        if (this.severe) {
+            s = s + " (S)";
+        }
+        return s;
+    }
+
+    // getters and setters
     public boolean Severe() {
         return this.severe;
     }
@@ -61,14 +74,5 @@ public class Patient {
 
     public void setTreated(boolean treated) {
         this.treated = treated;
-    }
-
-    // produce an identifying string for the patient
-    public String toString() {
-        String s = "Patient " + id;
-        if (this.severe) {
-            s = s + " (S)";
-        }
-        return s;
     }
 }

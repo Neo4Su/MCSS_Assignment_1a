@@ -3,6 +3,9 @@
  *
  * @author ngeard@unimelb.edu.au
  * @date 13 February 2024
+ *
+ * @name Yucheng Su
+ * @studentId 1503107
  */
 
 public class Consumer extends Thread {

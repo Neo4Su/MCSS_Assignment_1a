@@ -1,26 +1,32 @@
-
+/**
+ * Triage where patients undergo triage.
+ *
+ * @name Yucheng Su
+ * @studentId 1503107
+ */
 
 public class Triage {
-    // 表示是否有病人在triage
+    // current patient in triage
     Patient currentPatient = null;
 
-    // 病人到达triage
+    // patient arrives at triage
     public synchronized void arriveAtTriage(Patient patient) throws InterruptedException {
-        // 如果有病人在triage，则一直等待
+        // if there is already a patient in triage, keep waiting
         while (currentPatient != null) {
             wait();
         }
         currentPatient = patient;
         System.out.println(patient + " enters triage.");
-        // 通知有病人到达triage
+
+        // notify that a patient has arrived
         notifyAll();
     }
 
-    //诊断完成并招募orderlies后，病人离开triage
+    // patient leaves triage
     public synchronized void departFromTriage() {
         System.out.println(currentPatient + " leaves triage.");
         currentPatient = null;
-        // 通知有病人离开triage
+        // notify that a patient has left
         notifyAll();
     }
 }

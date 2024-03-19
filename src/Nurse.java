@@ -1,11 +1,30 @@
+/**
+ * A nurse, who works in the hospital and accompanies a patient through the ED.
+ *
+ * @name Yucheng Su
+ * @studentId 1503107
+ */
+
 public class Nurse extends Thread {
+    // a unique identifier for this nurse
     private int id;
+
+    // the foyer where patients are admitted and discharged
     private Foyer foyer;
+
+    // the triage where patients are diagnosed
     private Triage triage;
+
+    // the treatment room where patients are treated
     private Treatment treatment;
+
+    // the orderlies who assist the nurse with patient transfers
     private Orderlies orderlies;
+
+    // the patient allocated to this nurse
     private Patient patient = null;
 
+    // initialize the nurse with id and instances of Foyer, Triage, Orderlies, and Treatment
     public Nurse(int id, Foyer foyer, Triage triage, Orderlies orderlies, Treatment treatment) {
         this.id = id;
         this.foyer = foyer;
@@ -14,80 +33,80 @@ public class Nurse extends Thread {
         this.treatment = treatment;
     }
 
+    // simulate behaviour of the nurse
     @Override
     public void run() {
         while (!isInterrupted()) {
             try {
-                //allocate a nurse to a patient
+                /* actions in the foyer
+                 * 1. allocate the nurse to a patient
+                 * 2. recruit orderlies before leaving
+                 * 3. transfer to triage
+                 */
                 foyer.allocateNurse(this);
-
-                //进入triage前招募orderlies, 为保证打印顺序，将id传入，以便在同步块中打印
                 orderlies.recruitOrderlies(id);
-
-                //护送病人到triage
                 foyer.transferToTriage();
-                //模拟护送病人到triage的时间
                 sleep(Params.TRANSFER_TIME);
 
-                //到达triage
+                /*
+                 * actions in the triage
+                 * 1. arrive at triage
+                 * 2. release orderlies
+                 * 3. undergo triage
+                 * 4. recruit orderlies before leaving
+                 * 5. leave triage for another location
+                 */
                 triage.arriveAtTriage(patient);
-                //释放orderlies
                 orderlies.releaseOrderlies(id);
-
-                //模拟诊断病人的时间
                 sleep(Params.TRIAGE_TIME);
-                //诊断完成, 招募orderlies并离开triage
                 orderlies.recruitOrderlies(id);
-
                 triage.departFromTriage();
-                //模拟护送病人到foyer/treatment的时间
                 sleep(Params.TRANSFER_TIME);
 
-                //根据是否严重决定去向
+                // if patient is severe, go to treatment room
                 if (patient.Severe()) {
-                    //病人严重，送到treatment
+                    /* actions in the treatment room:
+                     * 1. arrive at treatment
+                     * 2. release orderlies
+                     * 3. let specialist treat patient
+                     * 4. recruit orderlies before leaving
+                     * 5. leave treatment room for foyer
+                     */
                     treatment.arriveAtTreatment(patient);
-                    //释放orderlies
                     orderlies.releaseOrderlies(id);
-
-                    //由专家进行治疗
                     treatment.treatPatient();
-
-                    //治疗完成，招募orderlies离开，回到foyer
                     orderlies.recruitOrderlies(id);
-
                     treatment.departFromTreatment();
-                    //模拟护送病人到foyer的时间
                     sleep(Params.TRANSFER_TIME);
-                    //到达foyer，准备离开
-                    foyer.prepareToLeaveED(patient);
-                    //释放orderlies
+
+                    // arrive at foyer and release orderlies
+                    foyer.arriveForDischarge(patient);
                     orderlies.releaseOrderlies(id);
 
-                    //护士结束任务，可以分配新的病人
+                    // nurse releases patient, task done, patient is free to be discharged
                     foyer.releasePatient(id);
 
                 } else {
-                    //病人不严重，返回foyer
-                    //到达foyer，准备离开
-                    foyer.prepareToLeaveED(patient);
-                    //释放orderlies
+                    // if the patient is not severe, return to foyer
+                    // arrive at foyer and release orderlies
+                    foyer.arriveForDischarge(patient);
                     orderlies.releaseOrderlies(id);
 
-                    //护士结束任务，可以分配新的病人
+                    // nurse releases patient, task done, patient is free to be discharged
                     foyer.releasePatient(id);
                 }
-
             } catch (InterruptedException e) {
                 this.interrupt();
             }
         }
     }
 
+    // set the patient allocated to this nurse
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
 
+    // get the id of this nurse
     public int getNurseId() {
         return id;
     }

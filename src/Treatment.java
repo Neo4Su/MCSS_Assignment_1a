@@ -1,60 +1,71 @@
-
+/**
+ * Treatment room where patients are treated by a specialist.
+ *
+ * @name Yucheng Su
+ * @studentId 1503107
+ */
 public class Treatment {
+    // current patient in treatment room
     private Patient currentPatient = null;
+
+    // a flag indicating whether specialist is at the treatment room
     private boolean specialistAvailable = false;
 
-    //病人到达treatment room
+    // patient arrives at treatment room
     public synchronized void arriveAtTreatment(Patient patient) throws InterruptedException {
-        //如果当前有病人在接受治疗，则一直等待
+        // if there is already a patient in treatment room, keep waiting
         while (currentPatient != null) {
             wait();
         }
         currentPatient = patient;
         System.out.println(patient + " enters treatment room.");
-        //通知有病人来了
+
+        // notify that a patient has arrived
         notifyAll();
     }
 
-    //专家进入treatment room
+    // specialist enters treatment room
     public synchronized void specialistEnters() {
         specialistAvailable = true;
         System.out.println("Specialist enters treatment room.");
+
+        //notify that specialist has entered
         notifyAll();
     }
 
-    //专家离开treatment room 在治疗一个病人前不能离开
+    // specialist leaves treatment room
     public synchronized void specialistLeaves() throws InterruptedException {
-        //如果专家还未治疗好病人，则一直等待
-        //专家调用此函数前肯定已进入，specialistAvailable为true
-        //故循环结束说明治疗已完成，specialistAvailable被treatPatient设置为false
-        while (specialistAvailable == true) {
+        // if specialist hasn't treated a patient, keep waiting
+        while (currentPatient == null || currentPatient.isTreated() == false) {
             wait();
         }
         System.out.println("Specialist leaves treatment room.");
     }
 
-    //由护士调用，治疗病人
+    // treat patient
     public synchronized void treatPatient() throws InterruptedException {
-        //如果当前没有病人或专家不在，则一直等待
+        // if specialist is not here, keep waiting
         while (!specialistAvailable) {
             wait();
         }
         System.out.println(currentPatient + " treatment started.");
-        //模拟治疗病人的时间
-        Thread.sleep(Params.TREATMENT_TIME);
-
+        Thread.sleep(Params.TREATMENT_TIME); // simulate treatment time
         System.out.println(currentPatient + " treatment complete.");
-        //设置专家不可用，因为不能连续治疗两个病人
+
+        // set availability flag to false, because specialist need to leave for other duties
         specialistAvailable = false;
         currentPatient.setTreated(true);
-        //通知专家可以离开
+
+        // notify that treatment is complete
         notifyAll();
     }
 
+    // patient leaves treatment room
     public synchronized void departFromTreatment() {
         System.out.println(currentPatient + " leaves treatment room.");
         currentPatient = null;
-        //通知有病人离开treatment room
+
+        // notify that a patient has left
         notifyAll();
     }
 }
